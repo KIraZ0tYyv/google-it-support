@@ -1,0 +1,764 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+<title>3. OS (Linux)</title><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color:#ffffff; --text-color:#333333; --select-text-bg-color:#B5D6FC; --select-text-font-color:auto; --monospace:"Lucida Console",Consolas,"Courier",monospace; }
+html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+body { margin: 0px; padding: 0px; height: auto; bottom: 0px; top: 0px; left: 0px; right: 0px; font-size: 1rem; line-height: 1.42857; overflow-x: hidden; background: inherit; tab-size: 4; }
+iframe { margin: auto; }
+a.url { word-break: break-all; }
+a:active, a:hover { outline: 0px; }
+.in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; overflow-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 40px; }
+#write.first-line-indent p { text-indent: 2em; }
+#write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
+#write.first-line-indent li { margin-left: 2em; }
+.for-image #write { padding-left: 8px; padding-right: 8px; }
+body.typora-export { padding-left: 30px; padding-right: 30px; }
+.typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
+.typora-export .task-list-item input { pointer-events: none; }
+@media screen and (max-width: 500px) {
+  body.typora-export { padding-left: 0px; padding-right: 0px; }
+  #write { padding-left: 20px; padding-right: 20px; }
+  .CodeMirror-sizer { margin-left: 0px !important; }
+  .CodeMirror-gutters { display: none !important; }
+}
+#write li > figure:last-child { margin-bottom: 0.5rem; }
+#write ol, #write ul { position: relative; }
+img { max-width: 100%; vertical-align: middle; image-orientation: from-image; }
+button, input, select, textarea { color: inherit; font: inherit; }
+input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
+*, ::after, ::before { box-sizing: border-box; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p { position: relative; }
+p { line-height: inherit; }
+h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 4; }
+p { orphans: 4; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
+.md-math-block, .md-rawblock, h1, h2, h3, h4, h5, h6, p { margin-top: 1rem; margin-bottom: 1rem; }
+.hidden { display: none; }
+.md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
+a { cursor: pointer; }
+sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-radius: 4px; cursor: pointer; }
+sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
+#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
+figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
+figure > table { margin: 0px; }
+tr { break-inside: avoid; break-after: auto; }
+thead { display: table-header-group; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
+table.md-table td { min-width: 32px; }
+.CodeMirror-gutters { border-right: 0px; background-color: inherit; }
+.CodeMirror-linenumber { user-select: none; }
+.CodeMirror { text-align: left; }
+.CodeMirror-placeholder { opacity: 0.3; }
+.CodeMirror pre { padding: 0px 4px; }
+.CodeMirror-lines { padding: 0px; }
+div.hr:focus { cursor: none; }
+#write pre { white-space: pre-wrap; }
+#write.fences-no-line-wrapping pre { white-space: pre; }
+#write pre.ty-contain-cm { white-space: normal; }
+.CodeMirror-gutters { margin-right: 4px; }
+.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background: inherit; position: relative !important; }
+.md-diagram-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
+#write .md-fences.mock-cm { white-space: pre-wrap; }
+.md-fences.md-fences-with-lineno { padding-left: 0px; }
+#write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
+.md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
+.CodeMirror-line, twitterwidget { break-inside: avoid; }
+.footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
+.footnotes + .footnotes { margin-top: 0px; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; background: 0px 0px; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; -webkit-tap-highlight-color: transparent; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; }
+li div { padding-top: 0px; }
+blockquote { margin: 1rem 0px; }
+li .mathjax-block, li p { margin: 0.5rem 0px; }
+li { margin: 0px; position: relative; }
+blockquote > :last-child { margin-bottom: 0px; }
+blockquote > :first-child, li > :first-child { margin-top: 0px; }
+.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
+#write .footnote-line { white-space: pre-wrap; }
+@media print {
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; font-variant-ligatures: no-common-ligatures; }
+  #write { margin-top: 0px; padding-top: 0px; border-color: transparent !important; }
+  .typora-export * { -webkit-print-color-adjust: exact; }
+  html.blink-to-pdf { font-size: 13px; }
+  .typora-export #write { break-after: avoid; }
+  .typora-export #write::after { height: 0px; }
+  .is-mac table { break-inside: avoid; }
+}
+.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
+a img, img a { cursor: pointer; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background: rgb(204, 204, 204); display: block; overflow-x: hidden; }
+p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
+#write.first-line-indent p > .md-image:only-child:not(.md-img-error) img { left: -2em; position: relative; }
+p > .md-image:only-child { display: inline-block; width: 100%; }
+#write .MathJax_Display { margin: 0.8em 0px 0px; }
+.md-math-block { width: 100%; }
+.md-math-block:not(:empty)::after { display: none; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus, [contenteditable="false"]:active, [contenteditable="false"]:focus { outline: 0px; box-shadow: none; }
+.md-task-list-item { position: relative; list-style-type: none; }
+.task-list-item.md-task-list-item { padding-left: 0px; }
+.md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: none; }
+.math { font-size: 1rem; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-radius: 10px; }
+.md-toc-content { position: relative; margin-left: 0px; }
+.md-toc-content::after, .md-toc::after { display: none; }
+.md-toc-item { display: block; color: rgb(65, 131, 196); }
+.md-toc-item a { text-decoration: none; }
+.md-toc-inner:hover { text-decoration: underline; }
+.md-toc-inner { display: inline-block; cursor: pointer; }
+.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
+.md-toc-h2 .md-toc-inner { margin-left: 2em; }
+.md-toc-h3 .md-toc-inner { margin-left: 4em; }
+.md-toc-h4 .md-toc-inner { margin-left: 6em; }
+.md-toc-h5 .md-toc-inner { margin-left: 8em; }
+.md-toc-h6 .md-toc-inner { margin-left: 10em; }
+@media screen and (max-width: 48em) {
+  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
+  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
+  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
+  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
+}
+a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
+.footnote-line a:not(.reversefootnote) { color: inherit; }
+.md-attr { display: none; }
+.md-fn-count::after { content: "."; }
+code, pre, samp, tt { font-family: var(--monospace); }
+kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; }
+.md-comment { color: rgb(162, 127, 3); opacity: 0.8; font-family: var(--monospace); }
+code { text-align: left; vertical-align: initial; }
+a.md-print-anchor { white-space: pre !important; border-width: initial !important; border-style: none !important; border-color: initial !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; background: 0px 0px !important; text-decoration: initial !important; text-shadow: initial !important; }
+.md-inline-math .MathJax_SVG .noError { display: none !important; }
+.html-for-mac .inline-math-svg .MathJax_SVG { vertical-align: 0.2px; }
+.md-math-block .MathJax_SVG_Display { text-align: center; margin: 0px; position: relative; text-indent: 0px; max-width: none; max-height: none; min-height: 0px; min-width: 100%; width: auto; overflow-y: hidden; display: block !important; }
+.MathJax_SVG_Display, .md-inline-math .MathJax_SVG_Display { width: auto; margin: inherit; display: inline-block !important; }
+.MathJax_SVG .MJX-monospace { font-family: var(--monospace); }
+.MathJax_SVG .MJX-sans-serif { font-family: sans-serif; }
+.MathJax_SVG { display: inline; font-style: normal; font-weight: 400; line-height: normal; zoom: 90%; text-indent: 0px; text-align: left; text-transform: none; letter-spacing: normal; word-spacing: normal; overflow-wrap: normal; white-space: nowrap; float: none; direction: ltr; max-width: none; max-height: none; min-width: 0px; min-height: 0px; border: 0px; padding: 0px; margin: 0px; }
+.MathJax_SVG * { transition: none 0s ease 0s; }
+.MathJax_SVG_Display svg { vertical-align: middle !important; margin-bottom: 0px !important; margin-top: 0px !important; }
+.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
+.md-diagram-panel > svg { max-width: 100%; }
+[lang="flow"] svg, [lang="mermaid"] svg { max-width: 100%; height: auto; }
+[lang="mermaid"] .node text { font-size: 1rem; }
+table tr th { border-bottom: 0px; }
+video { max-width: 100%; display: block; margin: 0px auto; }
+iframe { max-width: 100%; width: 100%; border: none; }
+.highlight td, .highlight tr { border: 0px; }
+svg[id^="mermaidChart"] { line-height: 1em; }
+mark { background: rgb(255, 255, 0); color: rgb(0, 0, 0); }
+.md-html-inline .md-plain, .md-html-inline strong, mark .md-inline-math, mark strong { color: inherit; }
+mark .md-meta { color: rgb(0, 0, 0); opacity: 0.3 !important; }
+@media print {
+  .typora-export h1, .typora-export h2, .typora-export h3, .typora-export h4, .typora-export h5, .typora-export h6 { break-inside: avoid; }
+}
+
+
+.CodeMirror { height: auto; }
+.CodeMirror.cm-s-inner { background: inherit; }
+.CodeMirror-scroll { overflow: auto hidden; z-index: 3; }
+.CodeMirror-gutter-filler, .CodeMirror-scrollbar-filler { background-color: rgb(255, 255, 255); }
+.CodeMirror-gutters { border-right: 1px solid rgb(221, 221, 221); background: inherit; white-space: nowrap; }
+.CodeMirror-linenumber { padding: 0px 3px 0px 5px; text-align: right; color: rgb(153, 153, 153); }
+.cm-s-inner .cm-keyword { color: rgb(119, 0, 136); }
+.cm-s-inner .cm-atom, .cm-s-inner.cm-atom { color: rgb(34, 17, 153); }
+.cm-s-inner .cm-number { color: rgb(17, 102, 68); }
+.cm-s-inner .cm-def { color: rgb(0, 0, 255); }
+.cm-s-inner .cm-variable { color: rgb(0, 0, 0); }
+.cm-s-inner .cm-variable-2 { color: rgb(0, 85, 170); }
+.cm-s-inner .cm-variable-3 { color: rgb(0, 136, 85); }
+.cm-s-inner .cm-string { color: rgb(170, 17, 17); }
+.cm-s-inner .cm-property { color: rgb(0, 0, 0); }
+.cm-s-inner .cm-operator { color: rgb(152, 26, 26); }
+.cm-s-inner .cm-comment, .cm-s-inner.cm-comment { color: rgb(170, 85, 0); }
+.cm-s-inner .cm-string-2 { color: rgb(255, 85, 0); }
+.cm-s-inner .cm-meta { color: rgb(85, 85, 85); }
+.cm-s-inner .cm-qualifier { color: rgb(85, 85, 85); }
+.cm-s-inner .cm-builtin { color: rgb(51, 0, 170); }
+.cm-s-inner .cm-bracket { color: rgb(153, 153, 119); }
+.cm-s-inner .cm-tag { color: rgb(17, 119, 0); }
+.cm-s-inner .cm-attribute { color: rgb(0, 0, 204); }
+.cm-s-inner .cm-header, .cm-s-inner.cm-header { color: rgb(0, 0, 255); }
+.cm-s-inner .cm-quote, .cm-s-inner.cm-quote { color: rgb(0, 153, 0); }
+.cm-s-inner .cm-hr, .cm-s-inner.cm-hr { color: rgb(153, 153, 153); }
+.cm-s-inner .cm-link, .cm-s-inner.cm-link { color: rgb(0, 0, 204); }
+.cm-negative { color: rgb(221, 68, 68); }
+.cm-positive { color: rgb(34, 153, 34); }
+.cm-header, .cm-strong { font-weight: 700; }
+.cm-del { text-decoration: line-through; }
+.cm-em { font-style: italic; }
+.cm-link { text-decoration: underline; }
+.cm-error { color: red; }
+.cm-invalidchar { color: red; }
+.cm-constant { color: rgb(38, 139, 210); }
+.cm-defined { color: rgb(181, 137, 0); }
+div.CodeMirror span.CodeMirror-matchingbracket { color: rgb(0, 255, 0); }
+div.CodeMirror span.CodeMirror-nonmatchingbracket { color: rgb(255, 34, 34); }
+.cm-s-inner .CodeMirror-activeline-background { background: inherit; }
+.CodeMirror { position: relative; overflow: hidden; }
+.CodeMirror-scroll { height: 100%; outline: 0px; position: relative; box-sizing: content-box; background: inherit; }
+.CodeMirror-sizer { position: relative; }
+.CodeMirror-gutter-filler, .CodeMirror-hscrollbar, .CodeMirror-scrollbar-filler, .CodeMirror-vscrollbar { position: absolute; z-index: 6; display: none; }
+.CodeMirror-vscrollbar { right: 0px; top: 0px; overflow: hidden; }
+.CodeMirror-hscrollbar { bottom: 0px; left: 0px; overflow: hidden; }
+.CodeMirror-scrollbar-filler { right: 0px; bottom: 0px; }
+.CodeMirror-gutter-filler { left: 0px; bottom: 0px; }
+.CodeMirror-gutters { position: absolute; left: 0px; top: 0px; padding-bottom: 30px; z-index: 3; }
+.CodeMirror-gutter { white-space: normal; height: 100%; box-sizing: content-box; padding-bottom: 30px; margin-bottom: -32px; display: inline-block; }
+.CodeMirror-gutter-wrapper { position: absolute; z-index: 4; background: 0px 0px !important; border: none !important; }
+.CodeMirror-gutter-background { position: absolute; top: 0px; bottom: 0px; z-index: 4; }
+.CodeMirror-gutter-elt { position: absolute; cursor: default; z-index: 4; }
+.CodeMirror-lines { cursor: text; }
+.CodeMirror pre { border-radius: 0px; border-width: 0px; background: 0px 0px; font-family: inherit; font-size: inherit; margin: 0px; white-space: pre; overflow-wrap: normal; color: inherit; z-index: 2; position: relative; overflow: visible; }
+.CodeMirror-wrap pre { overflow-wrap: break-word; white-space: pre-wrap; word-break: normal; }
+.CodeMirror-code pre { border-right: 30px solid transparent; width: fit-content; }
+.CodeMirror-wrap .CodeMirror-code pre { border-right: none; width: auto; }
+.CodeMirror-linebackground { position: absolute; left: 0px; right: 0px; top: 0px; bottom: 0px; z-index: 0; }
+.CodeMirror-linewidget { position: relative; z-index: 2; overflow: auto; }
+.CodeMirror-wrap .CodeMirror-scroll { overflow-x: hidden; }
+.CodeMirror-measure { position: absolute; width: 100%; height: 0px; overflow: hidden; visibility: hidden; }
+.CodeMirror-measure pre { position: static; }
+.CodeMirror div.CodeMirror-cursor { position: absolute; visibility: hidden; border-right: none; width: 0px; }
+.CodeMirror div.CodeMirror-cursor { visibility: hidden; }
+.CodeMirror-focused div.CodeMirror-cursor { visibility: inherit; }
+.cm-searching { background: rgba(255, 255, 0, 0.4); }
+@media print {
+  .CodeMirror div.CodeMirror-cursor { visibility: hidden; }
+}
+
+
+/* cyrillic-ext */
+/* cyrillic */
+/* greek-ext */
+/* greek */
+/* vietnamese */
+/* latin-ext */
+/* latin */
+/* cyrillic-ext */
+/* cyrillic */
+/* greek-ext */
+/* greek */
+/* vietnamese */
+/* latin-ext */
+/* latin */
+/* cyrillic-ext */
+/* cyrillic */
+/* greek-ext */
+/* greek */
+/* vietnamese */
+/* latin-ext */
+/* latin */
+/* cyrillic-ext */
+/* cyrillic */
+/* greek-ext */
+/* greek */
+/* vietnamese */
+/* latin-ext */
+/* latin */
+@font-face {
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 600;
+    src: local('Source Sans Pro SemiBold'), local('SourceSansPro-SemiBold'), url('file:////home/user/.config/Typora/themes/vue/6xKydSBYKcSV-LCoeQqfX1RYOo3i54rwlxdu.woff2') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}@import '';
+
+:root {
+    --side-bar-bg-color: #fff;
+    --control-text-color: #777;
+    --font-sans-serif: 'Ubuntu', 'Source Sans Pro', sans-serif !important;
+    --font-monospace: 'Fira Code', 'Roboto Mono', monospace !important;
+}
+
+html {
+    font-size: 16px;
+}
+
+body {
+    font-family: var(--font-sans-serif);
+    color: #34495e;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6rem;
+    letter-spacing: 0;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+#write {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 20px 30px 100px;
+}
+
+#write p {
+    line-height: 1.6rem;
+    word-spacing: .05rem;
+}
+
+#write ol li {
+    padding-left: 0.5rem;
+}
+
+#write > ul:first-child,
+#write > ol:first-child {
+    margin-top: 30px;
+}
+
+body > *:first-child {
+    margin-top: 0 !important;
+}
+
+body > *:last-child {
+    margin-bottom: 0 !important;
+}
+
+a {
+    color: #42b983;
+    font-weight: 600;
+    padding: 0 2px;
+    text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    position: relative;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    line-height: 1.4;
+    cursor: text;
+}
+
+h1:hover a.anchor,
+h2:hover a.anchor,
+h3:hover a.anchor,
+h4:hover a.anchor,
+h5:hover a.anchor,
+h6:hover a.anchor {
+    text-decoration: none;
+}
+
+h1 tt,
+h1 code {
+    font-size: inherit !important;
+}
+
+h2 tt,
+h2 code {
+    font-size: inherit !important;
+}
+
+h3 tt,
+h3 code {
+    font-size: inherit !important;
+}
+
+h4 tt,
+h4 code {
+    font-size: inherit !important;
+}
+
+h5 tt,
+h5 code {
+    font-size: inherit !important;
+}
+
+h6 tt,
+h6 code {
+    font-size: inherit !important;
+}
+
+h2 a,
+h3 a {
+    color: #34495e;
+}
+
+h1 {
+    padding-bottom: .4rem;
+    font-size: 2.2rem;
+    line-height: 1.3;
+}
+
+h2 {
+    font-size: 1.75rem;
+    line-height: 1.225;
+    margin: 35px 0 15px;
+    padding-bottom: 0.5em;
+    border-bottom: 1px solid #ddd;
+}
+
+h3 {
+    font-size: 1.4rem;
+    line-height: 1.43;
+    margin: 20px 0 7px;
+}
+
+h4 {
+    font-size: 1.2rem;
+}
+
+h5 {
+    font-size: 1rem;
+}
+
+h6 {
+    font-size: 1rem;
+    color: #777;
+}
+
+p,
+blockquote,
+ul,
+ol,
+dl,
+table {
+    margin: 0.8em 0;
+}
+
+li > ol,
+li > ul {
+    margin: 0 0;
+}
+
+hr {
+    height: 2px;
+    padding: 0;
+    margin: 16px 0;
+    background-color: #e7e7e7;
+    border: 0 none;
+    overflow: hidden;
+    box-sizing: content-box;
+}
+
+body > h2:first-child {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+body > h1:first-child {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+body > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+body > h3:first-child,
+body > h4:first-child,
+body > h5:first-child,
+body > h6:first-child {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+a:first-child h1,
+a:first-child h2,
+a:first-child h3,
+a:first-child h4,
+a:first-child h5,
+a:first-child h6 {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+h1 p,
+h2 p,
+h3 p,
+h4 p,
+h5 p,
+h6 p {
+    margin-top: 0;
+}
+
+li p.first {
+    display: inline-block;
+}
+
+ul,
+ol {
+    padding-left: 30px;
+}
+
+ul:first-child,
+ol:first-child {
+    margin-top: 0;
+}
+
+ul:last-child,
+ol:last-child {
+    margin-bottom: 0;
+}
+
+blockquote {
+    border-left: 4px solid #42b983;
+    padding: 10px 15px;
+    color: #777;
+    background-color: rgba(66, 185, 131, .1);
+}
+
+table {
+    padding: 0;
+    word-break: initial;
+}
+
+table tr {
+    border-top: 1px solid #dfe2e5;
+    margin: 0;
+    padding: 0;
+}
+
+table tr:nth-child(2n),
+thead {
+    background-color: #fafafa;
+}
+
+table tr th {
+    font-weight: bold;
+    border: 1px solid #dfe2e5;
+    border-bottom: 0;
+    text-align: left;
+    margin: 0;
+    padding: 6px 13px;
+}
+
+table tr td {
+    border: 1px solid #dfe2e5;
+    text-align: left;
+    margin: 0;
+    padding: 6px 13px;
+}
+
+table tr th:first-child,
+table tr td:first-child {
+    margin-top: 0;
+}
+
+table tr th:last-child,
+table tr td:last-child {
+    margin-bottom: 0;
+}
+
+#write strong {
+    padding: 0 1px;
+}
+
+#write em {
+    padding: 0 5px 0 2px;
+}
+
+#write table thead th {
+    background-color: #f2f2f2;
+}
+
+#write .CodeMirror-gutters {
+    border-right: none;
+}
+
+#write .md-fences {
+    border: 1px solid #F4F4F4;
+    -webkit-font-smoothing: initial;
+    margin: 0.8rem 0 !important;
+    padding: 0.3rem 0 !important;
+    line-height: 1.43rem;
+    background-color: #F8F8F8 !important;
+    border-radius: 2px;
+    font-family: var(--font-monospace);
+    font-size: 0.85rem;
+    word-wrap: normal;
+}
+
+#write .CodeMirror-wrap .CodeMirror-code pre {
+    padding-left: 12px;
+}
+
+#write code, tt {
+    padding: 2px 4px;
+    border-radius: 2px;
+    font-family: var(--font-monospace);
+    font-size: 0.92rem;
+    color: #e96900;
+    background-color: #f8f8f8;
+}
+
+tt {
+    margin: 0 2px;
+}
+
+#write .md-footnote {
+    background-color: #f8f8f8;
+    color: #e96900;
+}
+
+/* heighlight. */
+#write mark {
+    background-color: #EBFFEB;
+    border-radius: 2px;
+    padding: 2px 4px;
+    margin: 0 2px;
+    color: #222;
+    font-weight: 500;
+}
+
+#write del {
+    padding: 1px 2px;
+}
+
+.cm-s-inner .cm-link,
+.cm-s-inner.cm-link {
+    color: #22a2c9;
+}
+
+.cm-s-inner .cm-string {
+    color: #22a2c9;
+}
+
+.md-task-list-item > input {
+    margin-left: -1.3em;
+}
+
+@media print {
+    html {
+        font-size: 13px;
+    }
+
+    table,
+    pre {
+        page-break-inside: avoid;
+    }
+
+    pre {
+        word-wrap: break-word;
+    }
+}
+
+.md-fences {
+    background-color: #f8f8f8;
+}
+
+#write pre.md-meta-block {
+    padding: 1rem;
+    font-size: 85%;
+    line-height: 1.45;
+    background-color: #f7f7f7;
+    border: 0;
+    border-radius: 3px;
+    color: #777777;
+    margin-top: 0 !important;
+}
+
+.mathjax-block > .code-tooltip {
+    bottom: .375rem;
+}
+
+#write > h3.md-focus:before {
+    left: -1.5625rem;
+    top: .375rem;
+}
+
+#write > h4.md-focus:before {
+    left: -1.5625rem;
+    top: .285714286rem;
+}
+
+#write > h5.md-focus:before {
+    left: -1.5625rem;
+    top: .285714286rem;
+}
+
+#write > h6.md-focus:before {
+    left: -1.5625rem;
+    top: .285714286rem;
+}
+
+.md-image > .md-meta {
+    border-radius: 3px;
+    font-family: var(--font-monospace);
+    padding: 2px 0 0 4px;
+    font-size: 0.9em;
+    color: inherit;
+}
+
+.md-tag {
+    color: inherit;
+}
+
+.md-toc {
+    margin-top: 20px;
+    padding-bottom: 20px;
+}
+
+.sidebar-tabs {
+    border-bottom: none;
+}
+
+#typora-quick-open {
+    border: 1px solid #ddd;
+    background-color: #f8f8f8;
+}
+
+#typora-quick-open-item {
+    background-color: #FAFAFA;
+    border-color: #FEFEFE #e5e5e5 #e5e5e5 #eee;
+    border-style: solid;
+    border-width: 1px;
+}
+
+#md-notification:before {
+    top: 10px;
+}
+
+/** focus mode */
+
+.on-focus-mode blockquote {
+    border-left-color: rgba(85, 85, 85, 0.12);
+}
+
+header,
+.context-menu,
+.megamenu-content,
+footer {
+    font-family: var(--font-sans-serif);
+}
+
+.file-node-content:hover .file-node-icon,
+.file-node-content:hover .file-node-open-state {
+    visibility: visible;
+}
+
+.mac-seamless-mode #typora-sidebar {
+    background-color: var(--side-bar-bg-color);
+}
+
+.md-lang {
+    color: #b4654d;
+}
+
+.html-for-mac .context-menu {
+    --item-hover-bg-color: #E6F0FE;
+}
+
+
+
+</style>
+</head>
+<body class='typora-export'>
+<div id='write'  class=''><hr /><h1><a name="google-it-support-----operating-systems-linux" class="md-header-anchor"></a><span>Google IT support — Operating Systems (Linux)</span></h1><!-- MarkdownTOC --><ul><li><p><a href='#1-navigating-the-system'><span>1. Navigating the system</span></a></p><ul><li><a href='#11-basics'><span>1.1. Basics</span></a></li><li><a href='#12-terminal-commands'><span>1.2. Terminal commands</span></a></li><li><a href='#13-file-and-text-manipulation'><span>1.3. File and text manipulation</span></a></li><li><a href='#14-io-streams-and-the-pipeline'><span>1.4. I/O streams and the pipeline</span></a></li></ul></li><li><p><a href='#2-users-and-permissions'><span>2. Users and permissions</span></a></p><ul><li><a href='#21-users-and-groups'><span>2.1. Users and groups</span></a></li><li><a href='#22-permissions'><span>2.2. Permissions</span></a></li><li><a href='#23-special-permissions'><span>2.3. Special permissions</span></a></li></ul></li><li><p><a href='#3-package-and-software-management'><span>3. Package and software management</span></a></p><ul><li><a href='#31-software-packages'><span>3.1. Software packages</span></a></li><li><a href='#32-package-managers'><span>3.2. Package managers</span></a></li><li><a href='#33-archives'><span>3.3. Archives</span></a></li><li><a href='#34-mobile-app-packages'><span>3.4. Mobile app packages</span></a></li><li><a href='#35-devices-and-drivers'><span>3.5. Devices and drivers</span></a></li><li><a href='#36-os-updates'><span>3.6. OS updates</span></a></li></ul></li><li><p><a href='#4-file-systems'><span>4. File systems</span></a></p><ul><li><a href='#41-review-of-file-systems'><span>4.1. Review of file systems</span></a></li><li><a href='#42-partitions'><span>4.2. Partitions</span></a></li><li><a href='#43-disk-partitioning-formatting-and-mounting'><span>4.3. Disk partitioning, formatting and mounting</span></a></li><li><a href='#44-virtual-memory'><span>4.4. Virtual memory</span></a></li><li><a href='#45-files-and-metadata'><span>4.5. Files and metadata</span></a></li><li><a href='#46-disk-usage'><span>4.6. Disk usage</span></a></li><li><a href='#47-file-system-repair'><span>4.7. File system repair</span></a></li></ul></li><li><p><a href='#5-process-management'><span>5. Process management</span></a></p><ul><li><a href='#51-processes'><span>5.1. Processes</span></a></li><li><a href='#52-process-monitoring'><span>5.2. Process monitoring</span></a></li><li><a href='#53-process-management'><span>5.3. Process management</span></a></li><li><a href='#54-jobs'><span>5.4. Jobs</span></a></li><li><a href='#55-resource-monitoring'><span>5.5. Resource monitoring</span></a></li></ul></li><li><p><a href='#6-operating-systems-in-practice'><span>6. Operating systems in practice</span></a></p><ul><li><a href='#61-remote-connection'><span>6.1. Remote connection</span></a></li><li><a href='#62-logs'><span>6.2. Logs</span></a></li><li><a href='#63-os-deployment'><span>6.3. OS deployment</span></a></li><li><a href='#64-networking'><span>6.4. Networking</span></a></li><li><a href='#65-aliases'><span>6.5. Aliases</span></a></li><li><a href='#66-environment-variables'><span>6.6. Environment variables</span></a></li></ul></li></ul><!-- /MarkdownTOC --><hr /><h2><a name="1-navigating-the-system" class="md-header-anchor"></a><span>1. Navigating the system</span></h2><p><span>To navigate files and directories in operating systems you can use GUI or </span><em><span>command-line interface</span></em><span> (through </span><em><span>shell</span></em><span>). These files and directories are organized in a hierarchical directory tree (main directory branches off and holds other directories and files).</span></p><h3><a name="11-basics" class="md-header-anchor"></a><span>1.1. Basics</span></h3><ul><li><p><span>the path to the </span><em><span>root directory</span></em><span> (the parent for all other directories) is denoted by </span><code>/</code></p></li><li><p><em><span>root directory</span></em><span> contains:</span></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang=""><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 12px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">/bin  : essential binaries and programs</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">/etc  : system configuration files</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">/home : users files and directories</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">/opt  : package-manager installed files</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">/proc : information about currently running processes</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">/root : administrator account files and directories</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">/sbin : important system binaries and programs</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">/tmp  : temporary files</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">/usr  : user installed software</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">/var  : system logs</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 220px;"></div><div class="CodeMirror-gutters" style="display: none; height: 220px;"></div></div></div></pre></li><li><p><span>subdirectories are separated by </span><code>/</code><span> (forward slash)</span></p></li><li><p><span>hidden files and directories start with a </span><code>.</code><span> (e.g., </span><code>.hidden_file</code><span>)</span></p></li><li><p><span>most common </span><em><span>command-line interface</span></em><span> is </span><strong><span>bash</span></strong><span> (</span><a href='https://www.gnu.org/software/bash/manual/bash.html'><span>reference manual</span></a><span>)</span></p></li><li><p><span>strings in </span><em><span>bash</span></em><span> can be denoted by </span><code>&#39;my file&#39;</code><span> or by </span><code>my\ file</code><span> (</span><code>\</code><span> is the escape character)</span></p></li><li><p><em><span>tab completion</span></em><span> and </span><em><span>wildcards</span></em><span> are available in </span><em><span>bash</span></em></p></li></ul><h3><a name="12-terminal-commands" class="md-header-anchor"></a><span>1.2. Terminal commands</span></h3><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="console"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="console"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 12px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">&lt;user&gt;@&lt;computer&gt;:&lt;path&gt;$ &lt;command&gt; &lt;options&gt; &lt;arguments&gt;</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 22px;"></div><div class="CodeMirror-gutters" style="display: none; height: 22px;"></div></div></div></pre><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="" style="break-inside: unset;"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 12px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">man &lt;command&gt; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  : show manual for command (or info &lt;command&gt;)</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">&lt;command&gt; --help &nbsp; &nbsp; &nbsp; &nbsp; : show available flags for command</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">echo &lt;str&gt; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : print input</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">clear &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  : clear screen (or ctrl + L)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">history &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  : show command history (or ctrl + R for search)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">reset &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  : reinitialize terminal</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">exit &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : close terminal</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">reboot &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : reboot computer</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">shutdown &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : shutdown computer</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">pwd &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  : print working directory</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">ls &lt;path&gt; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  : list files and directories (-l list, -a all, -h human readable, -d directories)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">tree &lt;path&gt; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  : list files and directories in a tree-like format</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">cd &lt;path&gt; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  : change directory</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">touch &lt;path1&gt; ... &nbsp; &nbsp; &nbsp;  : create files (file{1..5}.txt for similar names)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">mkdir &lt;path1&gt; ... &nbsp; &nbsp; &nbsp;  : create directories (dir{1..5} for similar names)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">rm &lt;path1&gt; ... &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : remove files/directories (-r for directories, -f force)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">cp &lt;path1&gt; &lt;path2&gt; &nbsp; &nbsp; &nbsp; : copy file/directory (-r for directory)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">mv &lt;path1&gt; &lt;path2&gt; &nbsp; &nbsp; &nbsp; : move (or rename) file/directory</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">mc &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : Midnight Commander file manager</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 462px;"></div><div class="CodeMirror-gutters" style="display: none; height: 462px;"></div></div></div></pre><p><strong><span>System info</span></strong><span>:</span></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang=""><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 12px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">uname -a &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : OS info (or lsb_release -a)</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">lscpu &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  : CPU info</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">free -h &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  : RAM info</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">ip addr &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  : network info</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">df -h &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  : storage info (du -cksh for folders, --max-depth 1)</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 110px;"></div><div class="CodeMirror-gutters" style="display: none; height: 110px;"></div></div></div></pre><p><strong><span>Wildcards</span></strong><span> (symbols used to represent one or more characters):</span></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang=""><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 12px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">~ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  : /home/user</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">/ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  : / (i.e., root directory)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">.. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : one level up</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  : current directory</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">- &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  : back</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">? &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  : any symbol</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">* &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  : any number of any symbols</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 154px;"></div><div class="CodeMirror-gutters" style="display: none; height: 154px;"></div></div></div></pre><p><strong><span>Terminal shortcuts</span></strong><span>:</span></p><figure><table><thead><tr><th><span>shortcut</span></th><th><span>description</span></th></tr></thead><tbody><tr><td><kbd><span>Ctrl</span></kbd><span> + </span><kbd><span>Shift</span></kbd><span> + </span><kbd><span>C</span></kbd><span> / </span><kbd><span>V</span></kbd></td><td><span>copy/paste</span></td></tr><tr><td><kbd><span>Ctrl</span></kbd><span> + </span><kbd><span>A</span></kbd><span> / </span><kbd><span>E</span></kbd></td><td><span>move cursor to the begining/end of line</span></td></tr><tr><td><kbd><span>Ctrl</span></kbd><span> + </span><kbd><span>W</span></kbd></td><td><span>delete a word to the left</span></td></tr><tr><td><kbd><span>Ctrl</span></kbd><span> + </span><kbd><span>U</span></kbd><span> / </span><kbd><span>K</span></kbd></td><td><span>delete everything to the left/right of a cursor</span></td></tr><tr><td><kbd><span>Alt</span></kbd><span> + </span><kbd><span>B</span></kbd><span> / </span><kbd><span>F</span></kbd></td><td><span>move one word back/forward</span></td></tr><tr><td><kbd><span>Tab</span></kbd></td><td><span>tab completion</span></td></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td><kbd><span>Ctrl</span></kbd><span> + </span><kbd><span>Shift</span></kbd><span> + </span><kbd><span>T</span></kbd></td><td><span>open new terminal tab</span></td></tr><tr><td><kbd><span>Ctrl</span></kbd><span> + </span><kbd><span>Shift</span></kbd><span> + </span><kbd><span>W</span></kbd></td><td><span>close current terminal tab</span></td></tr><tr><td><kbd><span>Alt</span></kbd><span> + </span><kbd><span>&lt;#&gt;</span></kbd></td><td><span>swith to &lt;#&gt;th terminal tab</span></td></tr><tr><td><kbd><span>Ctrl</span></kbd><span> + </span><kbd><span>L</span></kbd></td><td><span>clear terminal screen</span></td></tr><tr><td><kbd><span>Ctrl</span></kbd><span> + </span><kbd><span>C</span></kbd></td><td><span>kill current process</span></td></tr><tr><td><kbd><span>Ctrl</span></kbd><span> + </span><kbd><span>Z</span></kbd></td><td><span>suspend current process</span></td></tr></tbody></table></figure><p><span>To make command history be based on relevancy (instead of chronological order) add to </span><code>~/.inputrc</code><span> the following:</span></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang=""><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 12px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">"\e[A": history-search-backward</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">"\e[B": history-search-forward</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">"\e[C": forward-char</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">"\e[D": backward-char</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 88px;"></div><div class="CodeMirror-gutters" style="display: none; height: 88px;"></div></div></div></pre><h3><a name="13-file-and-text-manipulation" class="md-header-anchor"></a><span>1.3. File and text manipulation</span></h3><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang=""><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 12px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">&lt;program&gt; &lt;file&gt; &nbsp; &nbsp; &nbsp; &nbsp; : execute file (or ./&lt;file&gt;)</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">sh &lt;file&gt; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  : execute shell file</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">cat &lt;file&gt; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : view contents of a file</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">head/tail &lt;file&gt; &nbsp; &nbsp; &nbsp; &nbsp; : view first/last 10 lines of a file</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">less &lt;file&gt; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  : open file with less text editor</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">nano &lt;file&gt; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  : open file with nano text editor</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">find &lt;path&gt; -name &lt;file&gt; : search for a file</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">grep &lt;str&gt; &lt;files&gt; &nbsp; &nbsp; &nbsp; : search within files (can use regexes)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">wc &lt;opt&gt; &lt;path&gt; &nbsp; &nbsp; &nbsp; &nbsp;  : count &lt;opt&gt; in a file (-l lines, -w words, -c characters)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">diff &lt;path1&gt; &lt;path2&gt; &nbsp; &nbsp; : compare files/directories</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 264px;"></div><div class="CodeMirror-gutters" style="display: none; height: 264px;"></div></div></div></pre><h3><a name="14-io-streams-and-the-pipeline" class="md-header-anchor"></a><span>1.4. I/O streams and the pipeline</span></h3><ul><li><span>there are three main I/O streams: </span><strong><span>stdin</span></strong><span> (files/keyboard), </span><strong><span>stdout</span></strong><span> (terminal by default) and </span><strong><span>stderr</span></strong><span> (terminal by default)</span></li><li><span>the direction of these streams can be changed with </span><em><span>redirector operators</span></em></li><li><span>there is a special file that discards all the data written to it (</span><code>/dev/null</code><span>)</span></li></ul><p style="text-align:center;"><img src="data/shell IO streams.png" width="500" title="Shell I/O streams"></p><p><span>&lt;!-- graph LR</span>
+<span>  id1(Standard Input)</span>
+<span>  id2[Shell]</span>
+<span>  id3(Standard Output)</span>
+<span>  id4(Standard Error)</span></p><p><span>  id1 -- #0 --</span><span>&gt;</span><span> id2</span>
+<span>  id2 -- #1 --</span><span>&gt;</span><span> id3</span>
+<span>  id2 -- #2 --</span><span>&gt;</span><span> id4 --&gt;</span></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang=""><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 12px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">&lt;com&gt;  &lt; &nbsp; &lt;file&gt; &nbsp; &nbsp; &nbsp;  : stdin from file</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">&lt;com&gt;  &gt; &nbsp; &lt;file&gt; &nbsp; &nbsp; &nbsp;  : stdout to file (rewrite)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">&lt;com&gt;  &gt;&gt;  &lt;file&gt; &nbsp; &nbsp; &nbsp;  : stdout to file (append)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">&lt;com&gt;  2&gt;  &lt;file&gt; &nbsp; &nbsp; &nbsp;  : stderr to file (rewrite)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">&lt;com&gt;  2&gt;&gt; &lt;file&gt; &nbsp; &nbsp; &nbsp;  : stderr to file (append)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">&lt;com1&gt; | &lt;com2&gt; &nbsp; &nbsp; &nbsp; &nbsp;  : pipeline (stdin[i+1] = stdout[i])</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 132px;"></div><div class="CodeMirror-gutters" style="display: none; height: 132px;"></div></div></div></pre><hr /><h2><a name="2-users-and-permissions" class="md-header-anchor"></a><span>2. Users and permissions</span></h2><h3><a name="21-users-and-groups" class="md-header-anchor"></a><span>2.1. Users and groups</span></h3><ul><li><span>there are two different types of users: </span><em><span>standard users</span></em><span> (have restricted access) and </span><em><span>administrators</span></em><span> (have complete control of a machine, i.e., can grant access for other users, install software, change restricted system settings, etc.)</span></li><li><span>there is also a special user, that is automatically created after OS installation called </span><strong><span>root user</span></strong><span>; they have all the OS privileges (i.e., they are the </span><em><span>super user</span></em><span>)</span></li><li><span>good practice: not to be logged in as </span><em><span>root</span></em><span> all the time, but use your own account, and acquire </span><em><span>root privileges</span></em><span> only when you need them</span></li><li><span>users are put together in </span><em><span>groups</span></em><span> according to their levels of access and permissions</span></li><li><span>good password practice: administrator sets a default password for a user, and then makes them change it on the next log in</span></li></ul><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang=""><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 12px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">sudo &lt;command&gt; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : run command as root</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">sudo su - &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  : substitute user to root (exit: to log out)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">users &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  : show currently logged in users</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">groups &lt;user&gt; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  : show user groups</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">useradd &lt;user&gt; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : add new user</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">userdel &lt;user&gt; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : delete user (-r with their home directory)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">passwd  &lt;user&gt; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : change user password</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">passwd -e &lt;user&gt; &nbsp; &nbsp; &nbsp; &nbsp; : expire user password (to force user change it on the next log in)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 220px;"></div><div class="CodeMirror-gutters" style="display: none; height: 220px;"></div></div></div></pre><ul><li><span>Groups membership information is stored in </span><code>/etc/group</code><span>. Each line represents a group and has four fields separated by colons: group name, group password (defaults to the root password, usually encrypted and stored in a separate file), group ID, and list of users in the group.</span></li><li><span>Users information is stored in </span><code>/etc/passwd</code><span> (most users in Linux are just running processes associated with a user). Each line represents a user; first three fields: username, password (encrypted and stored in a separate file), and UID (user ID, e.g., for root </span><code>UID=0</code><span>). Users with </span><code>UID &lt; 1000</code><span> are system processes, and users with </span><code>UID &gt; 1000</code><span> are real.</span></li><li><span>Passwords are securely scrambled and stored in </span><code>etc/shadow</code><span>, which can only be read by root.</span></li></ul><h3><a name="22-permissions" class="md-header-anchor"></a><span>2.2. Permissions</span></h3><p><span>There are three different types of permissions: </span><em><span>read</span></em><span>, </span><em><span>write</span></em><span> and </span><em><span>execute</span></em><span>. To view files/directories permissions use </span><code>ls -l</code><span>:</span></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="console"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="console"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 12px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">user@linux:~$ ls -l</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">total 10K</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">drwxrwxr-x &lt;N&gt; &lt;user&gt; &lt;group&gt; &lt;size&gt; &lt;date&gt; &lt;name&gt;</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 66px;"></div><div class="CodeMirror-gutters" style="display: none; height: 66px;"></div></div></div></pre><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang=""><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 12px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">d/l/- &nbsp; : directory/link/file</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">rwx/--- : read/write/execute for user/group/all other users</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">N &nbsp; &nbsp; &nbsp; : number of hardlinks or directories inside this directory</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">user &nbsp;  : owner of a file/directory</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">group &nbsp; : owner group</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">size &nbsp;  : size of a file/directory</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">date &nbsp;  : last modified</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">name &nbsp;  : name of a file/directory</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 176px;"></div><div class="CodeMirror-gutters" style="display: none; height: 176px;"></div></div></div></pre><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="" style="break-inside: unset;"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 12px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">chmod ### &lt;path&gt; &nbsp; &nbsp; &nbsp; &nbsp; : change file/directory permissions, where ### are</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 1) 3 symbols: [ugoa][+-=][rwx]</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  ugoa (user, group, other, all)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  +-=  (add, remove, assign)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  rwx  (read, write, execute)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 2) 3 numbers: 4 - read, 2 - write, 1 - execute</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  (add these numbers to set permissions)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">chown &lt;user&gt;  &lt;path&gt; &nbsp; &nbsp; : change the owner of a file/directory</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">chgrp &lt;group&gt; &lt;path&gt; &nbsp; &nbsp; : change the group file/directory belongs to</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">Examples:</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">u+x &nbsp; &nbsp; &nbsp; (execute for the owner)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">ug=rw,o=r (read and write for the owner and their group, read for other users)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">a-x &nbsp; &nbsp; &nbsp; (remove execute for all users)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">g=u &nbsp; &nbsp; &nbsp; (set group permissions as owner permissions)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">754 &nbsp; &nbsp; &nbsp; (rwxr-xr--)</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 352px;"></div><div class="CodeMirror-gutters" style="display: none; height: 352px;"></div></div></div></pre><figure><table><thead><tr><th style='text-align:center;' ><span>Base-8</span></th><th style='text-align:center;' ><span>Base-2</span></th><th style='text-align:center;' ><span>Permissions</span></th></tr></thead><tbody><tr><td style='text-align:center;' ><span>0</span></td><td style='text-align:center;' ><span>000</span></td><td style='text-align:center;' ><code>---</code></td></tr><tr><td style='text-align:center;' ><span>1</span></td><td style='text-align:center;' ><span>001</span></td><td style='text-align:center;' ><code>--x</code></td></tr><tr><td style='text-align:center;' ><span>2</span></td><td style='text-align:center;' ><span>010</span></td><td style='text-align:center;' ><code>-w-</code></td></tr><tr><td style='text-align:center;' ><span>3</span></td><td style='text-align:center;' ><span>011</span></td><td style='text-align:center;' ><code>-wx</code></td></tr><tr><td style='text-align:center;' ><span>4</span></td><td style='text-align:center;' ><span>100</span></td><td style='text-align:center;' ><code>r--</code></td></tr><tr><td style='text-align:center;' ><span>5</span></td><td style='text-align:center;' ><span>101</span></td><td style='text-align:center;' ><code>r-x</code></td></tr><tr><td style='text-align:center;' ><span>6</span></td><td style='text-align:center;' ><span>110</span></td><td style='text-align:center;' ><code>rw-</code></td></tr><tr><td style='text-align:center;' ><span>7</span></td><td style='text-align:center;' ><span>111</span></td><td style='text-align:center;' ><code>rwx</code></td></tr></tbody></table></figure><h3><a name="23-special-permissions" class="md-header-anchor"></a><span>2.3. Special permissions</span></h3><p><span>Sometimes you want to allow users do actions that require </span><em><span>root privileges</span></em><span> without giving them root access (e.g., to change user password you need to write into </span><code>etc/shadow</code><span> which is owned by root). For this reason </span><em><span>special permissions</span></em><span> exist:</span></p><ol start='' ><li><p><strong><span>setuid</span></strong></p><ul><li><span>allows to run files by the permission of the owner</span></li><li><span>file with a </span><em><span>setuid</span></em><span> flag has an </span><code>s</code><span> instead of </span><code>x</code><span> in its list of owner permissions</span></li></ul></li><li><p><strong><span>setgid</span></strong></p><ul><li><span>allows to run files as a member of the file group</span></li><li><span>file with a </span><em><span>setgid</span></em><span> flag has an </span><code>s</code><span> instead of </span><code>x</code><span> in its list of group permissions</span></li></ul></li><li><p><strong><span>sticky bit</span></strong></p><ul><li><span>allows anyone to write to a file/directory, but only the owner or root can delete anything</span></li><li><span>file/directory with a </span><em><span>sticky bit</span></em><span> flag has a </span><code>t</code><span> instead of </span><code>x</code><span> in its list of permissions for other users</span></li><li><span>often used for temporary files</span></li></ul></li></ol><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang=""><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 12px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">sudo chmod u+s &lt;path&gt; &nbsp;  : set setuid flag for a file (or 4###)</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">sudo chmod g+s &lt;path&gt; &nbsp;  : set setgid flag for a file (or 2###)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">sudo chmod +t  &lt;path&gt; &nbsp;  : set sticky bit flag for a file/directory (or 1###)</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 66px;"></div><div class="CodeMirror-gutters" style="display: none; height: 66px;"></div></div></div></pre><hr /><h2><a name="3-package-and-software-management" class="md-header-anchor"></a><span>3. Package and software management</span></h2><h3><a name="31-software-packages" class="md-header-anchor"></a><span>3.1. Software packages</span></h3><p><span>Developers package software using </span><em><span>software compiling tools</span></em><span>. Different Linux distributions can use different methods for software packaging, e.g., Red Hat uses </span><code>.rpm</code><span> (Red Hat package manager) packages and Ubuntu uses </span><code>.deb</code><span> (Debian) packages. They contain instructions for a computer to perform, computer code and other files that program might use.</span></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang=""><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 12px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">sudo dpkg -i &lt;name.deb&gt;  : install debian package</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">sudo dpkg -r &lt;name&gt; &nbsp; &nbsp;  : remove debian package</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">dpkg -l &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  : list installed debian packages</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 66px;"></div><div class="CodeMirror-gutters" style="display: none; height: 66px;"></div></div></div></pre><p><span>Packages usually rely on other pieces of code in order to work. In Linux these dependencies can be other packages or shared libraries. Standalone packages (e.g., </span><code>.deb</code><span> packages) don&#39;t install neccesary dependencies automatically, that&#39;s why </span><em><span>package managers</span></em><span> exist.</span></p><h3><a name="32-package-managers" class="md-header-anchor"></a><span>3.2. Package managers</span></h3><p><span>A </span><em><span>package manager</span></em><span> makes sure that the process of software installation, removal, update, and dependency management is as easy and automatic as possible. APT (</span><em><span>advanced package tool</span></em><span>) is a default package manager for Ubuntu.</span></p><ul><li><span>in Ubuntu the link to a package repository is stored in </span><code>/etc/apt/sources.list</code></li><li><span>there are also special repositories called </span><a href='https://help.launchpad.net/Packaging/PPA'><span>PPAs</span></a><span> (</span><em><span>personal package archives</span></em><span>), which are hosted on Launchpad servers (owned by Canonical Limited) and used by open source developers</span></li></ul><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang=""><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 12px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">sudo apt install &lt;name&gt;  : install package (with dependencies)</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">sudo apt remove  &lt;name&gt;  : remove package (with dependencies)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">sudo apt purge &nbsp; &lt;name&gt;  : remove package and its config files (with dependencies)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">sudo apt autoremove &nbsp; &nbsp;  : remove unnecessary packages</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">sudo apt update &nbsp; &nbsp; &nbsp; &nbsp;  : update the list of packages for upgrade</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">sudo apt upgrade &nbsp; &nbsp; &nbsp; &nbsp; : upgrade installed packages</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 154px;"></div><div class="CodeMirror-gutters" style="display: none; height: 154px;"></div></div></div></pre><h3><a name="33-archives" class="md-header-anchor"></a><span>3.3. Archives</span></h3><p><strong><span>Archive</span></strong><span> is one or more files compressed into a single file.</span></p><ul><li><span>popular archive types: </span><code>.tar</code><span>, </span><code>.zip</code><span>, and </span><code>.rar</code><span>.</span></li><li><span>archives can be used for software packaging (</span><em><span>installing from source</span></em><span>).</span></li><li><span>popular tools for working with archives: </span><a href='http://www.linfo.org/tar.html'><span>tar</span></a><span> and P7zip</span></li></ul><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang=""><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 12px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">zip &nbsp; &lt;path&gt; ... &nbsp; &nbsp; &nbsp; &nbsp; : create .zip archive (-r directory, -e encrypt)</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">unzip &lt;path&gt; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : extract .zip archive</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">gzip &nbsp; ... &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : create .gz archives and delete originals (-c don't delete)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">gunzip ... &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : extract .gz archives and delete originals (-c don't delete)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">tar -cvf  &lt;path&gt; ... &nbsp; &nbsp; : create .tar archive (no compression)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">tar -xvf  &lt;path&gt; &nbsp; &nbsp; &nbsp; &nbsp; : extract .tar archive</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">tar -czvf &lt;path&gt; ... &nbsp; &nbsp; : create .tar.gz archive</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">tar -xzvf &lt;path&gt; &nbsp; &nbsp; &nbsp; &nbsp; : extract .tar.gz archive</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">tar -cjvf &lt;path&gt; ... &nbsp; &nbsp; : create .bz2 archive</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">tar -xjvf &lt;path&gt; &nbsp; &nbsp; &nbsp; &nbsp; : extract .bz2 archive</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 286px;"></div><div class="CodeMirror-gutters" style="display: none; height: 286px;"></div></div></div></pre><h3><a name="34-mobile-app-packages" class="md-header-anchor"></a><span>3.4. Mobile app packages</span></h3><p><em><span>Mobile applications</span></em><span> usually can be downloaded only from a trusted source (like an </span><em><span>app store</span></em><span>). </span><em><span>App store</span></em><span> is a central managed marketplace for app developers to publish and sell mobile apps, i.e., the </span><em><span>app store</span></em><span> acts as </span><em><span>package manager</span></em><span>, and the </span><em><span>app store service</span></em><span> acts as a </span><em><span>package repository</span></em><span>.</span></p><ul><li><span>mobile apps are standalone software packages (i.e., contain all dependencies)</span></li><li><span>apps on an </span><em><span>app store</span></em><span> have usually been through a security review and have been approved by the store owner</span></li><li><span>apps on an </span><em><span>app store</span></em><span> are signed by the developer, and if the source code is changed, the signature becomes invalid</span></li><li><span>in a business environment </span><em><span>enterprise app management</span></em><span> tools are used</span></li><li><span>mobile apps can be installed from other sources too (</span><em><span>side-loading</span></em><span>)</span></li><li><span>mobile apps store data in </span><em><span>cache</span></em><span> (so clearing cache will reset all the settings and delete all the user app data)</span></li></ul><h3><a name="35-devices-and-drivers" class="md-header-anchor"></a><span>3.5. Devices and drivers</span></h3><p><strong><span>Driver</span></strong><span> is a software that helps a hardware device interact with an OS.</span></p><p><span>In Linux, everything is a file, even hardware devices. So when a device is connected to a computer, a </span><a href='https://en.wikipedia.org/wiki/Device_file'><span>device file</span></a><span> is created in the </span><code>/dev</code><span> </span><a href='https://en.wikipedia.org/wiki/Udev'><span>directory</span></a><span>.</span></p><ul><li><p><span>most of the device files don&#39;t correspond to physical devices (e.g., </span><code>/dev/null</code><span>)</span></p></li><li><p><span>common device types in Linux (see with </span><code>ls -l</code><span>):</span></p><ol start='' ><li><strong><span>character devices</span></strong><span> (transmit data by characters, i.e., keyboards, mouses, etc.)</span></li><li><strong><span>block devices</span></strong><span> (transmit data by blocks, i.e., SSDs, USB drives, etc.)</span></li></ol></li><li><p><span>mass storage devices (e.g., hard and flash drives) are denoted as </span><code>/dev/sda</code><span>, </span><code>/dev/sdb/</code><span>, etc.</span></p></li><li><p><span>most of the device drivers are a part of the </span><em><span>kernel</span></em><span>, and if not, there are </span><em><span>kernel modules</span></em><span> (installed like all  the other software in Linux)</span></p></li></ul><h3><a name="36-os-updates" class="md-header-anchor"></a><span>3.6. OS updates</span></h3><p><span>Installing latest system updates is a good practice to keep OS secure and get the newest features. In Ubuntu </span><code>sudo apt upgrade</code><span> will install the latest security updates, but won&#39;t upgrade the </span><em><span>kernel</span></em><span> and other core packages.</span></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang=""><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 12px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">uname -r &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : show kernel release</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">sudo apt update &nbsp; &nbsp; &nbsp; &nbsp;  : update the list of packages for upgrade</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">sudo apt full-upgrade &nbsp;  : upgrade all packages including the kernel (or dist-upgrade)</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 66px;"></div><div class="CodeMirror-gutters" style="display: none; height: 66px;"></div></div></div></pre><hr /><h2><a name="4-file-systems" class="md-header-anchor"></a><span>4. File systems</span></h2><h3><a name="41-review-of-file-systems" class="md-header-anchor"></a><span>4.1. Review of file systems</span></h3><p><span>A </span><em><span>file system</span></em><span> is used to keep track of files and file storage on a disk. The major operating systems have their own unique file systems:</span></p><ul><li><p><span>Windows uses </span><strong><span>NTFS</span></strong><span> by default, and Linux uses </span><strong><span>ext4</span></strong><span> (most common)</span></p></li><li><p><span>for most file systems, cross OS support is minimal (e.g., Windows doesn&#39;t read </span><em><span>ext4</span></em><span>).</span></p></li><li><p><span>there is also </span><a href='https://support.microsoft.com/en-us/help/154997/description-of-the-fat32-file-system'><strong><span>FAT32</span></strong></a><span> file system (used for flash drives):</span></p><ul><li><span>supported by all three major operating systems</span></li><li><span>allows only for files smaller than 4 GB</span></li><li><span>max size of a file system is 32 GB</span></li></ul></li></ul><h3><a name="42-partitions" class="md-header-anchor"></a><span>4.2. Partitions</span></h3><p><span>A </span><em><span>storage device</span></em><span> can be divided into </span><strong><span>partitions</span></strong><span> (pieces of the device that can be managed independently). Partitions essentially act as separate sub-devices, but they all use the same physical device.</span></p><ul><li><span>file system can only be added on a partition</span></li><li><span>different partitions of the same physical device can use different file systems</span></li><li><span>when a file system is formated on a partition, it becomes a </span><strong><span>volume</span></strong></li></ul><p><strong><span>Partition table</span></strong><span> is a component of a device that tells the OS how the device is partitioned (which are the boot partitions, space allocated for partitions, etc.)</span></p><p><span>There are two main </span><em><span>partition table schemes</span></em><span> which decide how to structure the information on partitions:</span></p><ol start='' ><li><p><strong><span>MBR (master boot record)</span></strong></p><ul><li><span>mostly used in Windows, slowly being replaced by GPT</span></li><li><span>max volume size is 2 TB</span></li><li><span>max four </span><em><span>primary</span></em><span> partitions on a device (can add more with </span><em><span>extended</span></em><span> and </span><em><span>logical</span></em><span> partitions)</span></li></ul></li><li><p><strong><span>GPT (GUID partition table)</span></strong></p><ul><li><span>max volume size is 8 ZB</span></li><li><span>max 128 partitions on a device (i.e., all partitions are </span><em><span>primary</span></em><span>)</span></li><li><span>UEFI booting is supported only for GPT devices</span></li></ul></li></ol><h3><a name="43-disk-partitioning-formatting-and-mounting" class="md-header-anchor"></a><span>4.3. Disk partitioning, formatting and mounting</span></h3><p><span>In Linux, </span><em><span>disk partitioning</span></em><span> and </span><em><span>file system formatting</span></em><span> can be done via GUI or with a few different partitioning terminal tools, e.g., with </span><strong><span>parted</span></strong><span>:</span></p><ul><li><span>supports MBR and GPT partitioning</span></li><li><span>can be used in two modes: interactive (launched as a separate program) and command line (through shell)</span></li></ul><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang=""><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 12px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">sudo parted -l &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : show info about connected storage devices and their partitions</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">sudo parted /dev/sdx &nbsp; &nbsp; : run parted in an interactive mode for a selected device</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">(parted) print &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : show info about storage device and its partitions</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">(parted) mklabel ... &nbsp; &nbsp; : create device label (e.g., mklabel msdos/gpt)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">(parted) mkpart  ... &nbsp; &nbsp; : create partition (e.g., mkpart primary ext4 1MiB 5GiB)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">(parted) quit &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  : quit from interactive mode</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">sudo mkfs -t &lt;FS&gt; &lt;sdx#&gt; : format selected partition with a file system</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 198px;"></div><div class="CodeMirror-gutters" style="display: none; height: 198px;"></div></div></div></pre><p><span>After a file system has been formatted it needs to be </span><em><span>mounted</span></em><span> to a directory (to make it accessible). Linux does this automatically, but it can also be done manually.</span></p><ul><li><span>manually mounted devices are unmounted on shutdown</span></li><li><span>to automatically mount a device on startup modify </span><code>/etc/fstab</code><span> (</span><a href='https://en.wikipedia.org/wiki/Fstab'><span>contains</span></a><span> device UUIDs, or universally unique IDs; mount points, type of used file system, etc.)</span></li></ul><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang=""><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 12px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">sudo mount &lt;sdx#&gt; &lt;path&gt; : mount storage device to a directory</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">sudo umount &lt;sdx#&gt; &nbsp; &nbsp; &nbsp; : unmount storage device (or &lt;path&gt; instead of &lt;/dev/sdx#&gt;)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">sudo blkid &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : show UUIDs for storage devices (a.k.a block devices)</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 66px;"></div><div class="CodeMirror-gutters" style="display: none; height: 66px;"></div></div></div></pre><h3><a name="44-virtual-memory" class="md-header-anchor"></a><span>4.4. Virtual memory</span></h3><p><strong><span>Virtual memory</span></strong><span> allows OS provide the available physical memory (RAM) to the running applications. It creates a mapping between virtual and physical addresses. </span><em><span>Virtual memory</span></em><span> allows programs:</span></p><ul><li><span>not to worry about what portions of memory are used by other programs</span></li><li><span>not to worry about where the data they use is located in RAM</span></li><li><span>use more memory than physically available (by using a </span><strong><span>swap area</span></strong><span> on a hard drive) </span></li></ul><p style="text-align:center;"><img src="data/virtual memory.png" width="400" title=" "></p><p><span>When a particular </span><em><span>page of data</span></em><span> (data block) isn&#39;t being used by an application, it gets evicted (copied out of memory onto the hard drive). This way memory resources are used most efficiently, and if a program needs a page that&#39;s not accessed a lot, the OS can still get to it in </span><em><span>swap</span></em><span>.</span></p><p><span>Manually create swap partition on a storage device:</span></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang=""><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 12px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">sudo parted /dev/sdx</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">(parted) mkpart primary linux-swap &lt;start&gt; &lt;end&gt;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">(parted) quit</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">sudo mkswap /dev/sdx#</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">sudo swapon /dev/sdx#</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 110px;"></div><div class="CodeMirror-gutters" style="display: none; height: 110px;"></div></div></div></pre><h3><a name="45-files-and-metadata" class="md-header-anchor"></a><span>4.5. Files and metadata</span></h3><p><span>Linux uses a structure called </span><strong><span>inode</span></strong><span> to store and represent files and their metadata on a volume.</span></p><ul><li><p><span>inodes are stored in an </span><em><span>inode table</span></em></p></li><li><p><span>the inode stores everything about files except file names and the file data itself</span></p></li><li><p><span>there are special types of files that provide access to other files:</span></p><ol start='' ><li><p><strong><span>Symbolic links</span></strong></p><ul><li><span>point to another file by its name (i.e., if the name of the destination file is changed, the link will stop working)</span></li><li><span>create with </span><code>ln -s &lt;path&gt; &lt;softlink&gt;</code></li></ul></li><li><p><strong><span>Hard links</span></strong></p><ul><li><span>point to another file by its inode entry (i.e., if the name of the destination file is changed, the link will still work)</span></li><li><span>create with </span><code>ln &lt;path&gt; &lt;hardlink&gt;</code></li><li><code>ls -l</code><span> will show the amount of </span><em><span>hardlinks</span></em><span> a file has (third field)</span></li></ul></li></ol></li></ul><h3><a name="46-disk-usage" class="md-header-anchor"></a><span>4.6. Disk usage</span></h3><p><span>In Linux, </span><strong><span>disk usage</span></strong><span> and </span><strong><span>disk free</span></strong><span> utilities can be used to monitor disk usage. Linux does a better job than Windows in avoiding fragmentation of data on hard disk drives, so </span><a href='https://www.howtogeek.com/115229/htg-explains-why-linux-doesnt-need-defragmenting/'><span>defragmentation is not needed</span></a><span>.</span></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang=""><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 12px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">du &lt;path&gt; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  : show disk usage for a directory (-h human readable)</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">df &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : show free disk space (-h human readable)</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 44px;"></div><div class="CodeMirror-gutters" style="display: none; height: 44px;"></div></div></div></pre><h3><a name="47-file-system-repair" class="md-header-anchor"></a><span>4.7. File system repair</span></h3><p><span>Data corruption could happen for lots of reasons:</span></p><ul><li><span>unsafe removing of a storage device (i.e., data might not to be transferred from buffer to a device in time)</span></li><li><span>unexpected power shut downs</span></li><li><span>system failures and software bugs</span></li></ul><p><span>Linux file system has features that minimize the danger of data corruption, as well as, features that recover data when it gets damaged:</span></p><ul><li><a href='https://en.wikipedia.org/wiki/Fsck'><span>file system check</span></a><span> utility will try to repair a file system (use </span><code>sudo fsck /dev/sdx</code><span> </span><strong><span>only on unmounted devices!</span></strong><span>)</span></li><li><span>in some Linux distros </span><code>fsck</code><span> runs on a boot and tries to auto-repair any issues with the file system</span></li></ul><hr /><h2><a name="5-process-management" class="md-header-anchor"></a><span>5. Process management</span></h2><h3><a name="51-processes" class="md-header-anchor"></a><span>5.1. Processes</span></h3><p><strong><span>Program</span></strong><span> is an application that a user can run.</span></p><p><strong><span>Process</span></strong><span> is a program that&#39;s executing (i.e., user can have many processes of the same program running at the same time, e.g., browser tabs of a web browser).</span></p><ul><li><span>when Linux boots, OS kernel starts </span><code>init</code><span> process (</span><code>PID = 1</code><span>), which starts up all other processes</span></li><li><span>in Linux, processes have a </span><em><span>parent-child</span></em><span> relationship, i.e., every process has a parent (child process inherit some things like variables and settings, i.e., environment)</span></li><li><span>when processes complete their task, they will usually terminate automatically</span></li><li><span>Linux processes can&#39;t operate independently of their parents (unlike in Windows), i.e., if user terminates a parent of a process, it will be terminated too</span></li></ul><h3><a name="52-process-monitoring" class="md-header-anchor"></a><span>5.2. Process monitoring</span></h3><p><span>In Linux processes can be monitored:</span></p><ol start='' ><li><span>by viewing the files in </span><code>/proc</code><span> directory (since everything in Linux has a file, including processes)</span></li><li><span>with </span><code>ps</code><span> </span><a href='https://man7.org/linux/man-pages/man1/ps.1.html'><span>utility</span></a></li></ol><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang=""><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 12px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">ps &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : show short list of processes</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">ps -x &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  : show list of processes</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">ps -ef &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : show extended list of processes</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 66px;"></div><div class="CodeMirror-gutters" style="display: none; height: 66px;"></div></div></div></pre><ul><li><p><span>Info for </span><code>ps -x</code><span>:</span></p><ul><li><strong><span>PID</span></strong><span> (process ID)</span></li><li><strong><span>TTY</span></strong><span> (terminal associated with the process)</span></li><li><strong><span>STAT</span></strong><span> (process status: R for running/waiting to run, T for suspended, S for interruptible sleep)</span></li><li><strong><span>TIME</span></strong><span> (total CPU time the process has taken up)</span></li><li><strong><span>Command</span></strong><span> (name of the command that&#39;s running)</span></li></ul></li><li><p><span>Info for </span><code>ps -ef</code><span>:</span></p><ul><li><strong><span>UID</span></strong><span> (user ID of the user who launched the process)</span></li><li><strong><span>PID</span></strong><span> (process ID)</span></li><li><strong><span>PPID</span></strong><span> (parent process ID)</span></li><li><strong><span>C</span></strong><span> (number of children)</span></li><li><strong><span>STime</span></strong><span> (start time of the process)</span></li><li><strong><span>TTY</span></strong><span> (terminal associated with the process)</span></li><li><strong><span>TIME</span></strong><span> (total CPU time the process has taken up)</span></li><li><strong><span>CMD</span></strong><span> (name fo the command that&#39;s running)</span></li></ul></li></ul><h3><a name="53-process-management" class="md-header-anchor"></a><span>5.3. Process management</span></h3><p><span>Sometimes user might want to interrupt a process before it fully completes. </span><strong><span>Signals</span></strong><span> are used for that purpose, they can be generated through other processes and software, or with keyboard shortcuts. Most common </span><em><span>signals</span></em><span> in Linux:</span></p><ul><li><p><strong><span>SIGINT</span></strong></p><ul><li><span>interrupt the process</span></li><li><span>keyboard shortcut: </span><kbd><span>Ctrl</span></kbd><span> + </span><kbd><span>C</span></kbd></li></ul></li><li><p><strong><span>SIGTERM</span></strong></p><ul><li><span>terminate the process (and give some time to clean up the resources to avoid file corruption)</span></li><li><span>with </span><code>kill &lt;PID&gt;</code></li></ul></li><li><p><strong><span>SIGKILL</span></strong></p><ul><li><span>terminate the process (immediately)</span></li><li><span>with </span><code>kill -KILL &lt;PID&gt;</code></li></ul></li><li><p><strong><span>SIGTSTP</span></strong></p><ul><li><span>suspend the process (to continue it later)</span></li><li><span>with </span><code>kill -TSTP &lt;PID&gt;</code></li><li><span>keyboard shortcut: </span><kbd><span>Ctrl</span></kbd><span> + </span><kbd><span>Z</span></kbd></li></ul></li><li><p><strong><span>SIGCONT</span></strong></p><ul><li><span>continue suspended process</span></li><li><span>with </span><code>kill -CONT &lt;PID&gt;</code></li></ul></li></ul><h3><a name="54-jobs" class="md-header-anchor"></a><span>5.4. Jobs</span></h3><p><span>In Linux, </span><strong><span>job</span></strong><span> is a task that has started running and not yet completed.</span></p><ul><li><p><span>each job is assigned with a sequential </span><em><span>job ID</span></em></p></li><li><p><span>types of job statuses:</span></p><ol start='' ><li><em><span>foreground</span></em><span> (command occupies the terminal until it completes)</span></li><li><em><span>background</span></em><span> (command runs without occupying the terminal)</span></li></ol></li><li><p><span>user can turn </span><em><span>foreground</span></em><span> jobs into </span><em><span>background</span></em><span> jobs by suspending them, i.e., with a </span><kbd><span>Ctrl</span></kbd><span> + </span><kbd><span>Z</span></kbd><span> shortcut, or with a </span><code>bg</code><span> command</span></p></li><li><p><span>user can run a program in a </span><em><span>background</span></em><span> mode with a </span><code>&lt;program&gt; &amp;</code><span> command</span></p></li></ul><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang=""><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 12px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">jobs &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : list all jobs</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">fg %&lt;JID&gt;/%&lt;str&gt; &nbsp; &nbsp; &nbsp; &nbsp; : place job into the foreground</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">bg %&lt;JID&gt;/%&lt;str&gt; &nbsp; &nbsp; &nbsp; &nbsp; : place job in the background</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 66px;"></div><div class="CodeMirror-gutters" style="display: none; height: 66px;"></div></div></div></pre><h3><a name="55-resource-monitoring" class="md-header-anchor"></a><span>5.5. Resource monitoring</span></h3><p><span>In Linux, user can monitor system resources use with several tools:</span></p><ul><li><p><code>uptime</code><span> (brief info)</span></p><ul><li><span>shows info about the current time and how long system&#39;s been running</span></li><li><span>shows how many users are logged on</span></li><li><span>shows computer&#39;s </span><a href='https://en.wikipedia.org/wiki/Load_(computing)'><span>load average</span></a><span> (average CPU load in 1, 5, and 15 minute intervals)</span></li></ul></li><li><p><code>top</code><span> (full info)</span></p><ul><li><span>shows the processes that are using the most resources</span></li><li><span>returns </span><em><span>idle</span></em><span> (a quick snapshot of total tasks running), CPU usage, memory usage, etc.</span></li><li><kbd><span>Q</span></kbd><span> key to quit</span></li></ul></li><li><p><code>htop</code><span> (similar to </span><code>top</code><span>)</span></p></li><li><p><code>lsof</code></p><ul><li><span>list open files and processes that are using them</span></li></ul></li></ul><hr /><h2><a name="6-operating-systems-in-practice" class="md-header-anchor"></a><span>6. Operating systems in practice</span></h2><h3><a name="61-remote-connection" class="md-header-anchor"></a><span>6.1. Remote connection</span></h3><p><strong><span>SSH (secure shell)</span></strong><span> is a protocol used to securely connect to computers remotely.</span></p><ul><li><p><em><span>SSH client</span></em><span> needs to be installed on a user computer, and </span><em><span>SSH server</span></em><span> on a host machine (popular programs: OpenSSH and PuTTy)</span></p></li><li><p><em><span>SSH server</span></em><span> doesn&#39;t need to be a physical machine, it can be just a software that&#39;s running as a background process</span></p></li><li><p><span>connect with </span><code>ssh &lt;user&gt;@&lt;host&gt;</code><span> (OpenSSH)</span></p><ul><li><span>user has to have an account on a host machine</span></li><li><span>can access host using an </span><em><span>IP address</span></em><span> or a </span><em><span>host name</span></em></li><li><span>can specify a port with </span><code>-p &lt;port&gt;</code><span> (</span><code>22</code><span> by default for SSH)</span></li></ul></li><li><p><span>when user connects to a remote machine for the first time, they will be asked to verify the authenticity of a host, and after confirmation host will be added to the list of known hosts</span></p></li><li><p><span>SSH </span><em><span>authentication keys</span></em><span> can be used instead of passwords (more secure)</span></p></li><li><p><span>users can transfer data between computers through SSH tunnel using </span><strong><span>scp (secure copy)</span></strong><span> utility or file managers (e.g., filezilla):</span></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang=""><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 12px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">scp &lt;user&gt;@&lt;host&gt;:&lt;path1&gt; &lt;path2&gt; : copy server → client</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">scp &lt;path1&gt; &lt;user&gt;@&lt;host&gt;:&lt;path2&gt; : copy client → server</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 44px;"></div><div class="CodeMirror-gutters" style="display: none; height: 44px;"></div></div></div></pre></li><li><p><span>another option for secure remote connections: VPN</span></p></li></ul><h3><a name="62-logs" class="md-header-anchor"></a><span>6.2. Logs</span></h3><p><span>In most systems, there is a service that runs in the background and constantly writes events to logs. In Linux, logs are stored in the </span><code>/var/log</code><span> directory.</span></p><ul><li><p><span>some of the log files:</span></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang=""><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 12px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">/var/log/syslog &nbsp; &nbsp;  : everything (except off events)</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">/var/log/auth.log &nbsp;  : authorization and security-related events</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">/var/log/kern.log &nbsp;  : kernel messages</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">/var/log/dmesg &nbsp; &nbsp; &nbsp; : system startup messages</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 88px;"></div><div class="CodeMirror-gutters" style="display: none; height: 88px;"></div></div></div></pre></li><li><p><span>logs are deleted after some period of time to save storage space (</span><code>lofrotate</code><span> is a utility for </span><em><span>log rotation</span></em><span>)</span></p></li><li><p><span>in the case of a set of machines the </span><em><span>centralized logging</span></em><span> is used</span></p></li><li><p><code>/var/log/syslog</code><span> includes:</span></p><ol start='' ><li><span>time stamp of the event (can be in </span><em><span>Unix/epoche time</span></em><span> format, i.e., number of seconds since </span><code>1970-01-01 00:00</code><span>)</span></li><li><span>host name of the machine the event occurred on</span></li><li><span>service that the log event is referring to</span></li><li><span>the event that occurred</span></li></ol></li><li><p><span>can search for specific events by filtering</span></p></li><li><p><span>watch logs in real time: </span><code>tail -f /var/log/syslog</code></p></li></ul><h3><a name="63-os-deployment" class="md-header-anchor"></a><span>6.3. OS deployment</span></h3><p><span>Installing an OS on a large number of machines using traditional methods (e.g., with a USB stick) can be very time consuming, so other methods are used instead:</span></p><ol start='' ><li><p><strong><span>Disk cloning</span></strong></p><ol start='' ><li><span>Unmount device: </span><code>umount /dev/sdx</code></li><li><span>Create an image: </span><code>sudo dd if=dev/sdx of=&lt;path.img&gt; bs=100M</code></li></ol></li><li><p><strong><span>Network initiated deployment</span></strong></p><ul><li><span>request the images directly from the network</span></li><li><span>there are ways to use custom images too</span></li></ul></li></ol><h3><a name="64-networking" class="md-header-anchor"></a><span>6.4. Networking</span></h3><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="" style="break-inside: unset;"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 12px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">nmcli networking on/off  : networking on/off</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">nmcli radio wifi on/off  : wi-fi on/off</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">ip a &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : show local IP address</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">curl ifconfig.me &nbsp; &nbsp; &nbsp; &nbsp; : show IP address</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">ping &nbsp; &nbsp; &nbsp; &lt;domain&gt;/&lt;IP&gt; : send an echo request</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">traceroute &lt;domain&gt;/&lt;IP&gt; : trace route to the destination</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">nslookup &nbsp; &lt;domain&gt;/&lt;IP&gt; : resolve a domain name</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">wget &lt;options&gt; &lt;link&gt; &nbsp;  : download a file</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; --spider &nbsp; &nbsp;  - check file availability</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; -P &lt;path&gt; &nbsp; &nbsp; - specify download directory</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; -O &lt;path&gt; &nbsp; &nbsp; - specify name of a file</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; -i &lt;file.txt&gt; - download files using links in a text file</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; -r -l &lt;depth&gt; - download recursively</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; -A &lt;ext1&gt;,... - list of allowed file extensions</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; -R &lt;ext1&gt;,... - list of rejected file extensions</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 374px;"></div><div class="CodeMirror-gutters" style="display: none; height: 374px;"></div></div></div></pre><h3><a name="65-aliases" class="md-header-anchor"></a><span>6.5. Aliases</span></h3><p><span>Users can create </span><em><span>aliases</span></em><span> for their most used commands. Aliases can be </span><em><span>temporary</span></em><span> (for a current terminal window) or </span><em><span>permanent</span></em><span> (modify </span><code>~/.bashrc</code><span>).</span></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang=""><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 12px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">alias &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  : list all aliases</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">alias &lt;alias&gt;="&lt;com&gt;" &nbsp;  : create alias</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">unalias &lt;alias&gt; &nbsp; &nbsp; &nbsp; &nbsp;  : remove alias (-a all)</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 66px;"></div><div class="CodeMirror-gutters" style="display: none; height: 66px;"></div></div></div></pre><h3><a name="66-environment-variables" class="md-header-anchor"></a><span>6.6. Environment variables</span></h3><p><span>In Linux, </span><em><span>environment variables</span></em><span> are a set of dynamic named values, that are used to store system settings (i.e., path to home directory, language settings, terminal settings, etc.). They are used by applications launched in shells or subshells.</span></p><ul><li><p><em><span>environment variables</span></em><span> have the following format:</span></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang=""><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 12px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">KEY=value</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">KEY="value"</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">KEY=value1:value2</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 66px;"></div><div class="CodeMirror-gutters" style="display: none; height: 66px;"></div></div></div></pre></li><li><p><em><span>environment variable</span></em><span> types:</span></p><ol start='' ><li><strong><span>system-wide environment variables</span></strong></li><li><strong><span>session-wide environment variables</span></strong></li><li><strong><span>shell variables</span></strong></li></ol></li><li><p><span>show and modify </span><em><span>environment variables</span></em><span> values:</span></p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang=""><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 12px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">env &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  : list all env variables (or printenv)</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">set &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  : list all env and shell variables</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">env  $&lt;var&gt; &nbsp; &nbsp; &nbsp; &nbsp;  : print env variable value (or printenv &lt;var&gt;)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">echo $&lt;var&gt; &nbsp; &nbsp; &nbsp; &nbsp;  : print env or shell variable value</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">&lt;var&gt;="&lt;val&gt;" &nbsp; &nbsp; &nbsp;  : assign value to a shell variable</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">export &lt;var&gt;="&lt;val&gt;" : assign value to an env variable</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">unset &lt;var&gt; &nbsp; &nbsp; &nbsp; &nbsp;  : unset env or shell variable</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 176px;"></div><div class="CodeMirror-gutters" style="display: none; height: 176px;"></div></div></div></pre></li><li><p><span>to make changes in </span><em><span>environment variables</span></em><span> persistent user needs to modify bash configuration files:</span></p><ol start='' ><li><span>for </span><em><span>system-wide variables</span></em><span> modify </span><code>/etc/environment</code><span> in the </span><code>VAR=&quot;val&quot;</code><span> format</span></li><li><span>for </span><em><span>session-wide variables</span></em><span> modify </span><code>~/.bashrc</code><span> in the </span><code>export VAR=&quot;val&quot;</code><span> format (user-specific)</span></li></ol></li></ul><p>&nbsp;</p></div>
+</body>
+</html>
